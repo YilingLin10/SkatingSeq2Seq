@@ -1,0 +1,16 @@
+data/old
+data/loop
+data/flip
+data/axel
+data/salchow
+data/toe_loop
+data/lutz
+data/single_jump
+data/flipNLoop
+data/flipNLoopNLutz
+runs
+experiments
+result
+__pycache__/
+*.py[cod]
+**/.DS_Store
