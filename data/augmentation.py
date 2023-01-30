@@ -39,7 +39,11 @@ def augment_test(csv_file, root_dir):
 
     for video in videos:
         video_name = video
-        action = video_name.split('_')[0]
+        split_video_name = video_name.split('_')
+        if (len(split_video_name) == 3):
+            action = f"{split_video_name[0]}_{split_video_name[1]}"
+        else:
+            action = split_video_name[0]
         frames = list(Path(f'/home/lin10/projects/SkatingJumpClassifier/20220801/{action}/{video_name}').glob("*.jpg"))
         video_data = jump_frame.loc[jump_frame['Video'] == video_name]
         if video_data.empty:
@@ -97,7 +101,11 @@ def augment_train(csv_file, root_dir):
     for video in videos:
         id = 0
         video_name = video
-        action = video_name.split('_')[0]
+        split_video_name = video_name.split('_')
+        if (len(split_video_name) == 3):
+            action = f"{split_video_name[0]}_{split_video_name[1]}"
+        else:
+            action = split_video_name[0]
         frames = list(Path(f'/home/lin10/projects/SkatingJumpClassifier/20220801/{action}/{video_name}').glob("*.jpg"))
         video_data = jump_frame.loc[jump_frame['Video'] == video_name]
         if video_data.empty:

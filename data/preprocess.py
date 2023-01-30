@@ -59,7 +59,11 @@ def load_data(json_file, split):
     for video_data in tqdm(video_data_list):
         video_name = video_data['id']
         original_video = video_data['video_name']
-        action = original_video.split('_')[0]
+        split_video_name = original_video.split('_')
+        if (len(split_video_name) == 3):
+            action = f"{split_video_name[0]}_{split_video_name[1]}"
+        else:
+            action = split_video_name[0]
         frames = list(Path(os.path.join(f'/home/lin10/projects/SkatingJumpClassifier/20220801/{action}', original_video)).glob("*.jpg"))
         start_frame = video_data['start_frame']
         end_frame = video_data['end_frame']
