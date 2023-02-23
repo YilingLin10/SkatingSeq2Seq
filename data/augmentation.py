@@ -11,7 +11,6 @@ from absl import flags
 from absl import app
 
 flags.DEFINE_string('action', None, 'all_jump, axel, flip, loop, lutz, old, salchow, toe')
-flags.DEFINE_string('estimator', 'alphapose', 'alphapose or posetriplet')
 FLAGS = flags.FLAGS
 
 ########################################################################
@@ -26,6 +25,8 @@ FLAGS = flags.FLAGS
 ## }
 ########################################################################
 def writeJsonl(output_file, data):
+    if not os.path.exists(os.path.dirname(output_file)):
+        os.makedirs(os.path.dirname(output_file))
     with open(output_file, "w") as f:
         for d in data:
             json.dump(d, f)
@@ -261,13 +262,13 @@ def augment_train(csv_file, root_dir):
 
 def main(_argv):
     csv_file='/home/lin10/projects/SkatingJumpClassifier/data/{}/info.csv'.format(FLAGS.action)
-    root_dir='/home/lin10/projects/SkatingJumpClassifier/data/{}/{}'.format(FLAGS.action, FLAGS.estimator)
-    train_output_file = '/home/lin10/projects/SkatingJumpClassifier/data/{}/{}/train_aug.jsonl'.format(FLAGS.action, FLAGS.estimator)
+    root_dir='/home/lin10/projects/SkatingJumpClassifier/data/{}'.format(FLAGS.action)
+    train_output_file = '/home/lin10/projects/SkatingJumpClassifier/data/{}/train_aug.jsonl'.format(FLAGS.action)
     train_data_list = augment_train(csv_file, root_dir)
     writeJsonl(train_output_file, train_data_list)
 
-    root_dir='/home/lin10/projects/SkatingJumpClassifier/data/{}/{}'.format(FLAGS.action, FLAGS.estimator)
-    test_output_file = '/home/lin10/projects/SkatingJumpClassifier/data/{}/{}/test_aug.jsonl'.format(FLAGS.action, FLAGS.estimator)
+    root_dir='/home/lin10/projects/SkatingJumpClassifier/data/{}'.format(FLAGS.action)
+    test_output_file = '/home/lin10/projects/SkatingJumpClassifier/data/{}/test_aug.jsonl'.format(FLAGS.action)
     test_data_list = augment_test(csv_file, root_dir)
     writeJsonl(test_output_file, test_data_list)
     
